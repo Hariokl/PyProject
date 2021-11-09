@@ -1,3 +1,10 @@
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtCore import QTimer
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QLineEdit, QPushButton, QMenu, QMenuBar, \
+    QStatusBar, QTextBrowser, QMessageBox, QDialog, QVBoxLayout, QHBoxLayout
+import sys
+import csv
+import random
 import sqlite3
 connect = sqlite3.connect('DBFSeva')
 cursor = connect.cursor()
@@ -200,3 +207,835 @@ R—сопротивление (в омах). Пользуясь этой фор
     ('При каком значении x значения выражений 3x + 4 и 7x + 6 равны?', '-2,5')
     """)
     connect.commit()
+
+
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.setEnabled(True)
+        MainWindow.resize(500, 600)
+        MainWindow.setFixedSize(500, 600)
+        self.centralwidget = QWidget(MainWindow)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        MainWindow.setFont(font)
+        self.centralwidget.setObjectName("centralwidget")
+        self.centralwidget.setFixedSize(500, 600)
+        self.Main_name_in_menu = QLabel(self.centralwidget)
+        self.Main_name_in_menu.setGeometry(QtCore.QRect(120, 20, 260, 190))
+        self.Main_name_in_menu.setObjectName("textBrowser")
+        self.Main_name_in_menu.setStyleSheet("padding: 10px;\
+                background-color: \
+                                   rgb(204, 204, 255); \
+                                   color: rgba(250,250,250,255); \
+                                   border-radius: 20px; border-width: -1px; \
+                                   border-color: rgb(0,0,0); \
+                                   font: bold 40px; \
+                                   padding: 3px; min-width: 1em; border-style: outset;")
+        self.Main_name_in_menu.setText('      Тест\n        по\nматематике')
+        self.Main_name_in_menu.adjustSize()
+        self.More_info_button = QPushButton(self.centralwidget)
+        self.More_info_button.setGeometry(QtCore.QRect(110, 350, 280, 60))
+        self.More_info_button.setObjectName("ReadyForTest")
+        self.More_info_button.setStyleSheet("margin: 1px; padding: 10px; \
+                              background-color: \
+                                                   rgb(255,255,250); \
+                                                   color: rgba(0,0,0,255); \
+                                                   border-radius: 25px; border-width: 3px; \
+                                                   border-color: rgb(0,0,0); \
+                                                   font: bold 18px; \
+                                                   min-width: 10em; \
+                                                   padding: 6px; border-style: outset;")
+        self.More_info_button.setText("Больше информации")
+        self.Return_back_to_main_menu_from_more_info_button = QPushButton(self.centralwidget)
+        self.Return_back_to_main_menu_from_more_info_button.setGeometry(QtCore.QRect(110, 10, 280, 60))
+        self.Return_back_to_main_menu_from_more_info_button.setObjectName("ReadyForTest")
+        self.Return_back_to_main_menu_from_more_info_button.setStyleSheet("margin: 1px; padding: 10px; \
+                                      background-color: \
+                                                           rgb(255,255,250); \
+                                                           color: rgba(0,0,0,255); \
+                                                           border-radius: 25px; border-width: 3px; \
+                                                           border-color: rgb(0,0,0); \
+                                                           font: bold 18px; \
+                                                           min-width: 10em; \
+                                                           padding: 6px; border-style: outset;")
+        self.Return_back_to_main_menu_from_more_info_button.setText("Вернутся на главное меню")
+        self.Must_to_know_info_about_app = QTextBrowser(self.centralwidget)
+        self.Must_to_know_info_about_app.setGeometry(QtCore.QRect(60, 80, 380, 380))
+        self.Must_to_know_info_about_app.setObjectName("textBrowser")
+        self.Must_to_know_info_about_app.setStyleSheet("padding: 1px;\
+                                background-color: \
+                                                   rgb(255, 255, 255); \
+                                                   color: rgb(0,0,0); \
+                                                   border-radius: 20px; border-width: -1px; \
+                                                   border-color: rgb(0,0,0); \
+                                                   font: bold 17px; \
+                                                   border-style: outset;")
+        info = "\t\tВАЖНО!\n   Это приложение ещё на стадии разработки и имеет много недаработок, прошу вас это понять."
+        info = f'{info}   Оно было сделано для проекта "ГИА-легче лёгкого", и не является оригинальным продуктом.'
+        info = f'{info} В приложении часто используются символы, не использующиеся в математике. Вот примеры:\n'
+        info = info + "    {4} - корень из четырёх.\n    4^3 - четыре в третий степени.\n"
+        info = f'{info}    1/2 - один поделить на два, т.е., одна вторая.\n'
+        info = info + '    2^3 + 1/2 - 2{3} — к 2-ум в третий степени добавить одну вторую и'
+        info = info + ' вычесть 2 умноженый на корень из трёх.'
+        self.Must_to_know_info_about_app.setText(info)
+        self.info_about_programmer = QTextBrowser(self.centralwidget)
+        self.info_about_programmer.setGeometry(QtCore.QRect(10, 470, 480, 120))
+        self.info_about_programmer.setObjectName("textBrowser")
+        self.info_about_programmer.setStyleSheet("padding: 1px;\
+                                        background-color: \
+                                                           rgb(204, 204, 250); \
+                                                           color: rgb(100,100,100); \
+                                                           border-radius: 20px; border-width: -1px; \
+                                                           border-color: rgb(0,0,0); \
+                                                           font: bold 17px; \
+                                                           border-style: outset;")
+        recieve = '    О всех недочётах просим писать на корпоративную почту - sfc.easy.as.pie@gmail.com\n'
+        recieve = f'{recieve}    Код написан организатором проекта "ГИА-легче лёгкого" - '
+        recieve = f'{recieve}Бужинским Всеволодом Ростиславовичом'
+        self.info_about_programmer.setText(recieve)
+        self.InputAnswer = QLineEdit(self.centralwidget)
+        self.InputAnswer.setGeometry(QtCore.QRect(40, 330, 420, 60))
+        self.InputAnswer.setObjectName("InputAnswer")
+        self.InputAnswer.setStyleSheet("padding: 10px;\
+        background-color: \
+                           rgb(255, 255, 255); \
+                           color: rgba(0,0,0,255); \
+                           border-width: 3px; \
+                           border-color: rgb(0,0,0); \
+                           font: bold 20px; \
+                           padding: 3px; min-width: 1em; border-style: outset;")
+        self.AnswerButton = QPushButton(self.centralwidget)
+        self.AnswerButton.setGeometry(QtCore.QRect(150, 420, 200, 50))
+        self.AnswerButton.setObjectName("AnswerButton")
+        self.AnswerButton.setStyleSheet("padding: 10px;\
+        background-color: \
+                           rgb(255, 255, 255); \
+                           color: rgba(0,0,0,255); \
+                           border-radius: 20px; border-width: 2px; \
+                           border-color: rgb(0,0,0); \
+                           font: bold 20px; \
+                           padding: 3px; min-width: 1em; border-style: outset;")
+        self.Question = QTextBrowser(self.centralwidget)
+        self.Question.setGeometry(QtCore.QRect(30, 120, 440, 190))
+        self.Question.setObjectName("textBrowser")
+        self.Question.setStyleSheet("padding: 10px;\
+        background-color: \
+                           rgb(255, 255, 255); \
+                           color: rgba(0,0,0,255); \
+                           border-radius: 20px; border-width: -1px; \
+                           border-color: rgb(0,0,0); \
+                           font: bold 20px; \
+                           padding: 3px; min-width: 1em; border-style: outset;")
+        self.WrongTypeOfAnswer = QTextBrowser(self.centralwidget)
+        self.WrongTypeOfAnswer.setGeometry(QtCore.QRect(20, 480, 460, 100))
+        self.WrongTypeOfAnswer.setObjectName("textBrowser")
+        self.WrongTypeOfAnswer.setStyleSheet("padding: 10px;\
+        background-color: \
+                           rgb(204, 204, 255); \
+                           color: rgb(200,0,0); \
+                           border-radius: 20px; border-width: -1px; \
+                           border-color: rgb(0,0,0); \
+                           font: bold 20px; \
+                           padding: 3px; min-width: 1em; border-style: outset;")
+        self.Results_of_test_more_info = QTextBrowser(self.centralwidget)
+        self.Results_of_test_more_info.setGeometry(QtCore.QRect(60, 80, 380, 480))
+        self.Results_of_test_more_info.setObjectName("textBrowser")
+        self.Results_of_test_more_info.setStyleSheet("padding: 1px;\
+                        background-color: \
+                                           rgb(255, 255, 255); \
+                                           color: rgb(0,0,0); \
+                                           border-radius: 20px; border-width: -1px; \
+                                           border-color: rgb(0,0,0); \
+                                           font: bold 19px; \
+                                           border-style: outset;")
+        self.ReadyForTestButton = QPushButton(self.centralwidget)
+        self.ReadyForTestButton.setGeometry(QtCore.QRect(90, 250, 320, 70))
+        self.ReadyForTestButton.setStyleSheet("margin: 1px; padding: 10px; \
+                      background-color: \
+                                           rgb(255,255,250); \
+                                           color: rgba(0,0,0,255); \
+                                           border-radius: 25px; border-width: 3px; \
+                                           border-color: rgb(0,0,0); \
+                                           font: bold 18px; \
+                                           min-width: 10em; \
+                                           padding: 6px; border-style: outset;")
+        self.ReadyForTestButton.setObjectName("ReadyForTest")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 500, 38))
+        self.menubar.setObjectName("menubar")
+        self.menuTest = QMenu(self.menubar)
+        self.menuTest.setObjectName("menuTest")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+        self.menubar.addAction(self.menuTest.menuAction())
+        self.Question_Number = QTextBrowser(self.centralwidget)
+        self.Question_Number.setGeometry(QtCore.QRect(20, 20, 200, 50))
+        self.Question_Number.setStyleSheet("padding: 10px;\
+                background-color: \
+                                   rgb(255, 255, 255); \
+                                   color: rgb(0,0,0); \
+                                   border-radius: 15px; border-width: -1px; \
+                                   border-color: rgb(0,0,0); \
+                                   font: bold 30px; \
+                                   padding: 3px; min-width: 1em; border-style: outset;")
+        self.Skip_Answer = QPushButton(self.centralwidget)
+        self.Skip_Answer.setGeometry(QtCore.QRect(300, 30, 170, 40))
+        self.Skip_Answer.setStyleSheet("padding: 10px;\
+                        background-color: \
+                                           rgb(255, 255, 255); \
+                                           color: rgb(0,0,0); \
+                                           border-radius: 20px; border-width: 2px; \
+                                           border-color: rgb(0,0,0); \
+                                           font: bold 15px; \
+                                           padding: 4px; min-width: 1em; border-style: outset;")
+        self.Skip_Answer.setText('Пропустить вопрос')
+        self.Message = QMessageBox()
+        self.Message.addButton('Да', QMessageBox.YesRole)
+        self.Message.addButton('Нет', QMessageBox.NoRole)
+        self.Button_to_return = QPushButton(self.centralwidget)
+        self.Button_to_return.setGeometry(QtCore.QRect(20, 10, 230, 50))
+        self.Button_to_return.setStyleSheet("padding: 5px;\
+                                background-color: \
+                                                   rgb(255, 255, 255); \
+                                                   color: rgb(0,0,0); \
+                                                   border-radius: 20px; border-width: 2px; \
+                                                   border-color: rgb(0,0,0); \
+                                                   font: bold 15px; \
+                                                   padding: 2px; border-style: outset;")
+        self.Button_to_return.setText('Вернутся в главное меню')
+        self.Button_to_get_more_info = QPushButton(self.centralwidget)
+        self.Button_to_get_more_info.setGeometry(QtCore.QRect(280, 10, 200, 50))
+        self.Button_to_get_more_info.setStyleSheet("padding: 5px;\
+                                        background-color: \
+                                                           rgb(255, 255, 255); \
+                                                           color: rgb(0,0,0); \
+                                                           border-radius: 20px; border-width: 2px; \
+                                                           border-color: rgb(0,0,0); \
+                                                           font: bold 14px; \
+                                                           padding: 2px; border-style: outset;")
+        self.Button_to_get_more_info.setText('Ещё информация')
+        self.Results_of_test = QTextBrowser(self.centralwidget)
+        self.Results_of_test.setObjectName("textBrowser")
+        self.Results_of_test.setStyleSheet("padding: 1px;\
+                                background-color: \
+                                                   rgb(255, 255, 255); \
+                                                   color: rgb(0,0,0); \
+                                                   border-radius: 20px; border-width: -1px; \
+                                                   border-color: rgb(0,0,0); \
+                                                   font: bold 20px; \
+                                                   border-style: outset;")
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.Results_of_test_right_answers = QTextBrowser(self.centralwidget)
+        self.Results_of_test_right_answers.setObjectName("textBrowser")
+        self.Results_of_test_right_answers.setGeometry(QtCore.QRect(80, 260, 340, 40))
+        self.Results_of_test_right_answers.setStyleSheet("padding: 1px;\
+                                        background-color: \
+                                                           rgb(255, 255, 255); \
+                                                           color: rgb(0,255,0); \
+                                                           border-radius: 20px; border-width: -1px; \
+                                                           border-color: rgb(0,0,0); \
+                                                           font: bold 22px; \
+                                                           border-style: outset;")
+        self.Results_of_test_wrong_answers = QTextBrowser(self.centralwidget)
+        self.Results_of_test_wrong_answers.setObjectName("textBrowser")
+        self.Results_of_test_wrong_answers.setGeometry(QtCore.QRect(80, 310, 340, 40))
+        self.Results_of_test_wrong_answers.setStyleSheet("padding: 1px;\
+                                                background-color: \
+                                                                   rgb(255, 255, 255); \
+                                                                   color: rgb(255,0,0); \
+                                                                   border-radius: 20px; border-width: -1px; \
+                                                                   border-color: rgb(0,0,0); \
+                                                                   font: bold 22px; \
+                                                                   border-style: outset;")
+        self.Results_of_test_skipped_questions = QTextBrowser(self.centralwidget)
+        self.Results_of_test_skipped_questions.setObjectName("textBrowser")
+        self.Results_of_test_skipped_questions.setGeometry(QtCore.QRect(80, 360, 340, 40))
+        self.Results_of_test_skipped_questions.setStyleSheet("padding: 1px;\
+                                                background-color: \
+                                                                   rgb(255, 255, 255); \
+                                                                   color: rgb(0,0,255); \
+                                                                   border-radius: 20px; border-width: -1px; \
+                                                                   border-color: rgb(0,0,0); \
+                                                                   font: bold 22px; \
+                                                                   border-style: outset;")
+        self.Result_compare_to_past_one = QTextBrowser(self.centralwidget)
+        self.Result_compare_to_past_one.setObjectName("textBrowser")
+        self.Result_compare_to_past_one.setGeometry(QtCore.QRect(20, 400, 460, 80))
+        self.Result_compare_to_past_one.setStyleSheet("padding: 1px;\
+                                                                background-color: \
+                                                                                   rgb(255, 255, 255); \
+                                                                                   color: rgb(0,0,0); \
+                                                                                   border-radius: 20px; border-width: -1px; \
+                                                                                   border-color: rgb(0,0,0); \
+                                                                                   font: bold 20px; \
+                                                                                   border-style: outset;")
+        self.Past_present_results_button = QPushButton(self.centralwidget)
+        self.Past_present_results_button.setGeometry(QtCore.QRect(100, 490, 300, 60))
+        self.Past_present_results_button.setStyleSheet("padding: 5px;\
+                                                background-color: \
+                                                                   rgb(255, 255, 255); \
+                                                                   color: rgb(0,0,0); \
+                                                                   border-radius: 20px; border-width: 2px; \
+                                                                   border-color: rgb(0,0,0); \
+                                                                   font: bold 20px; \
+                                                                   padding: 2px; border-style: outset;")
+        self.Past_present_results_button.setText('Этот тест')
+        self.Total_score_of_test = QTextBrowser(self.centralwidget)
+        self.Total_score_of_test.setObjectName("textBrowser")
+        self.Total_score_of_test.setGeometry(QtCore.QRect(70, 205, 360, 40))
+        self.Total_score_of_test.setStyleSheet("padding: 1px;\
+                                                background-color: \
+                                                                   rgb(255, 255, 255); \
+                                                                   color: rgb(0,0,0); \
+                                                                   border-radius: 20px; border-width: -1px; \
+                                                                   border-color: rgb(0,0,0); \
+                                                                   font: bold 25px; \
+                                                                   border-style: outset;")
+        self.Total_score_of_test.setHidden(True)
+        self.Results_of_test_skipped_questions.setHidden(True)
+        self.Results_of_test_right_answers.setHidden(True)
+        self.Results_of_test_wrong_answers.setHidden(True)
+        self.AnswerButton.setHidden(True)
+        self.InputAnswer.setHidden(True)
+        self.Question.setHidden(True)
+        self.WrongTypeOfAnswer.setHidden(True)
+        self.Results_of_test_more_info.setHidden(True)
+        self.Results_of_test.setHidden(True)
+        self.Button_to_get_more_info.setHidden(True)
+        self.Button_to_return.setHidden(True)
+        self.Skip_Answer.setHidden(True)
+        self.Question_Number.setHidden(True)
+        self.Result_compare_to_past_one.setHidden(True)
+        self.Past_present_results_button.setHidden(True)
+        self.Must_to_know_info_about_app.setHidden(True)
+        self.Return_back_to_main_menu_from_more_info_button.setHidden(True)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.AnswerButton.setText(_translate("MainWindow", "Ответить"))
+        self.ReadyForTestButton.setText(_translate("MainWindow", "Начать Тест"))
+
+
+class MyWidget(QMainWindow, Ui_MainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.list_of_user_answers = list()
+        self.list_of_id = list()
+        self.skip_bool = False
+        self.question_number = 0
+        self.initUI()
+        self.setStyleSheet("background-color: rgb(204, 204, 255);")
+        self.timer = QTimer()
+        self.grade = 0
+        self.past_grade = 0
+        self.past_score = 0
+        self.bool = False
+        self.past_list_of_answers_in_csv = []
+        self.present_list_of_answers = []
+        self.just_bool_for_first_time_doing_test = False
+
+    def initUI(self):
+        self.ReadyForTestButton.clicked.connect(self.start_test)
+        self.AnswerButton.clicked.connect(self.next_question)
+        self.Skip_Answer.clicked.connect(self.skip_answer)
+        self.setMouseTracking(True)
+        self.ReadyForTestButton.setMouseTracking(True)
+        self.centralwidget.setMouseTracking(True)
+        self.More_info_button.setMouseTracking(True)
+        self.Return_back_to_main_menu_from_more_info_button.setMouseTracking(True)
+        self.AnswerButton.setMouseTracking(True)
+        self.Skip_Answer.setMouseTracking(True)
+        self.Past_present_results_button.setMouseTracking(True)
+        self.Button_to_get_more_info.setMouseTracking(True)
+        self.Button_to_return.setMouseTracking(True)
+        self.More_info_button.clicked.connect(self.more_info_about_app)
+        self.Return_back_to_main_menu_from_more_info_button.clicked.connect(self.back_to_menu_from_more_info)
+
+    def mouseMoveEvent(self, event):
+        if self.question_number == 0:
+            if 410 > event.x() > 90 and 320 > event.y() > 250:
+                self.ReadyForTestButton.setGeometry(QtCore.QRect(88, 248, 324, 74))
+            else:
+                self.ReadyForTestButton.setGeometry(QtCore.QRect(90, 250, 320, 70))
+            if 400 > event.x() > 100 and 420 > event.y() > 340:
+                self.More_info_button.setGeometry(QtCore.QRect(108, 348, 284, 64))
+            else:
+                self.More_info_button.setGeometry(QtCore.QRect(110, 350, 280, 60))
+            if 400 > event.x() > 100 and 75 > event.y() > 5:
+                self.Return_back_to_main_menu_from_more_info_button.setGeometry(QtCore.QRect(108, 8, 284, 64))
+            else:
+                self.Return_back_to_main_menu_from_more_info_button.setGeometry(QtCore.QRect(110, 10, 280, 60))
+        elif 10 >= self.question_number >= 1:
+            if 355 > event.x() > 145 and 475 > event.y() > 415:
+                self.AnswerButton.setGeometry(QtCore.QRect(148, 418, 204, 54))
+            else:
+                self.AnswerButton.setGeometry(QtCore.QRect(150, 420, 200, 50))
+            if 480 > event.x() > 290 and 75 > event.y() > 30:
+                self.Skip_Answer.setGeometry(QtCore.QRect(298, 28, 174, 44))
+            else:
+                self.Skip_Answer.setGeometry(QtCore.QRect(300, 30, 170, 40))
+        else:
+            if 405 > event.x() > 95 and 555 > event.y() > 485:
+                self.Past_present_results_button.setGeometry(QtCore.QRect(98, 488, 304, 64))
+            else:
+                self.Past_present_results_button.setGeometry(QtCore.QRect(100, 490, 300, 60))
+            if 485 > event.x() > 275 and 65 > event.y() > 5:
+                self.Button_to_get_more_info.setGeometry(QtCore.QRect(278, 8, 204, 54))
+            else:
+                self.Button_to_get_more_info.setGeometry(QtCore.QRect(280, 10, 200, 50))
+            if 255 > event.x() > 15 and 65 > event.y() > 5:
+                self.Button_to_return.setGeometry(QtCore.QRect(18, 8, 234, 54))
+            else:
+                self.Button_to_return.setGeometry(QtCore.QRect(20, 10, 230, 50))
+
+    def start_test(self):
+        self.question_number = 1
+        self.Main_name_in_menu.setHidden(True)
+        self.Skip_Answer.setHidden(False)
+        self.ReadyForTestButton.setHidden(True)
+        self.Question_Number.setHidden(False)
+        self.AnswerButton.setHidden(False)
+        self.InputAnswer.setHidden(False)
+        self.Question.setHidden(False)
+        self.More_info_button.setHidden(True)
+        self.info_about_programmer.setHidden(True)
+        self.Question_Number.setText('Вопрос №' + str(self.question_number))
+        mainquestion_number = 'MainQuestion' + str(self.question_number)
+        id_select = random.randint(1, 10)
+        self.list_of_id.append(id_select)
+        question_from_db = 'SELECT Question FROM %s WHERE _id = %s' % (mainquestion_number, id_select)
+        question_from_db = cursor.execute(question_from_db).fetchall()[0]
+        self.Question.setText(question_from_db[0])
+
+    def next_question(self):
+        text_answer = self.InputAnswer.text()
+        if (text_answer == '' or len([x for x in text_answer if x not in '1234567890,-']) != 0) and not self.skip_bool:
+            self.skip_bool = False
+            self.WrongTypeOfAnswer.setHidden(False)
+            if text_answer == '':
+                self.WrongTypeOfAnswer.setText('Нельзя оставлять бланку ответа пустой.')
+            elif ' ' in text_answer:
+                self.WrongTypeOfAnswer.setText('Обнаружены пробелы. Пробелы в ответе НЕ НУЖНЫ.')
+            else:
+                self.WrongTypeOfAnswer.setText('Обнаружены недопустимые символы.')
+        else:
+            if self.skip_bool:
+                self.InputAnswer.setText('')
+            self.skip_bool = False
+            self.WrongTypeOfAnswer.setHidden(True)
+            self.list_of_user_answers.append(self.InputAnswer.text())
+            self.InputAnswer.setText('')
+            print(self.list_of_user_answers)
+            if self.question_number >= 10:
+                self.question_number += 1
+                self.results_of_test()
+            else:
+                self.question_number += 1
+                if self.question_number == 10:
+                    self.Question_Number.setGeometry(QtCore.QRect(20, 20, 210, 50))
+                self.Question_Number.setText('Вопрос №' + str(self.question_number))
+                mainquestion = 'MainQuestion' + str(self.question_number)
+                id_select = random.randint(1, 10)
+                self.list_of_id.append(id_select)
+                question_from_db = 'SELECT Question FROM %s WHERE _id = %s' % (mainquestion, id_select)
+                question = cursor.execute(question_from_db).fetchall()[0][0]
+                self.Question.setText(question)
+
+    def results_of_test(self):
+        self.Button_to_return.setHidden(False)
+        self.Button_to_get_more_info.setHidden(False)
+        self.ReadyForTestButton.setHidden(True)
+        self.AnswerButton.setHidden(True)
+        self.Question_Number.setHidden(True)
+        self.InputAnswer.setHidden(True)
+        self.Question.setHidden(True)
+        self.Skip_Answer.setHidden(True)
+        self.Results_of_test.setHidden(False)
+        self.Results_of_test_skipped_questions.setHidden(False)
+        self.Results_of_test_right_answers.setHidden(False)
+        self.Results_of_test_wrong_answers.setHidden(False)
+        self.Result_compare_to_past_one.setHidden(False)
+        self.Past_present_results_button.setHidden(False)
+        self.Total_score_of_test.setHidden(False)
+        try:
+            list_of_rows_in_csv = list()
+            with open('progression_file.csv', mode='r', encoding="utf8") as progression:
+                read = csv.reader(progression, delimiter=';', quotechar='"')
+                for row in read:
+                    if row != []:
+                        list_of_rows_in_csv.append(row)
+                self.past_score = list_of_rows_in_csv[-1][-2]
+                self.past_grade = list_of_rows_in_csv[-1][-1]
+                self.past_list_of_answers_in_csv = list_of_rows_in_csv[-1]
+                self.just_bool_for_first_time_doing_test = False
+        except Exception:
+            self.just_bool_for_first_time_doing_test = True
+            self.Result_compare_to_past_one.setHidden(True)
+            self.Past_present_results_button.setHidden(True)
+        finally:
+            with open('progression_file.csv', mode='w+', encoding="utf8") as progression:
+                writer = csv.writer(progression, delimiter=';', quotechar='"', quoting=csv.QUOTE_NONE)
+                list_of_answers_to_csv = list()
+                self.score = 0
+                for i in range(1, 11):
+                    mainanswer = 'MainQuestion' + str(i)
+                    id_select = self.list_of_id[i - 1]
+                    answer_from_db_to_csv = 'SELECT Answer FROM %s WHERE _id = %s' % (mainanswer, id_select)
+                    answer_to_csv = cursor.execute(answer_from_db_to_csv).fetchall()[0][0]
+                    right_or_wrong_answer = 'right' if self.list_of_user_answers[i - 1] == answer_to_csv else 'wrong'
+                    if right_or_wrong_answer == 'wrong':
+                        if self.list_of_user_answers[i - 1] == '':
+                            right_or_wrong_answer = 'skip'
+                    elif right_or_wrong_answer == 'right' and 6 < i < 10:
+                        self.score += 2
+                    else:
+                        self.score += 1
+                    list_of_answers_to_csv.append((self.list_of_user_answers[i - 1], answer_to_csv))
+                    list_of_answers_to_csv.append(right_or_wrong_answer)
+                list_of_answers_to_csv.append(self.score)
+                if self.score >= 11:
+                    self.grade = 5
+                elif self.score >= 8:
+                    self.grade = 4
+                elif self.score >= 5:
+                    self.grade = 3
+                else:
+                    self.grade = 2
+                list_of_answers_to_csv.append(self.grade)
+                self.present_list_of_answers = list_of_answers_to_csv
+                total = list()
+                if len(list_of_rows_in_csv) > 0:
+                    for past_answers in list_of_rows_in_csv:
+                        if past_answers != [] and past_answers != '' and past_answers != '[]':
+                            total.append(past_answers)
+                if list_of_answers_to_csv != [] and list_of_answers_to_csv != '' and list_of_answers_to_csv != '[]':
+                    total.append(list_of_answers_to_csv)
+                for x in total:
+                    writer.writerow(x)
+                print(list_of_answers_to_csv)
+                print(list_of_rows_in_csv)
+        print(self.list_of_id)
+        list_of_answers = list()
+        for i in range(1, 11):
+            mainanswer = 'MainQuestion' + str(i)
+            id_select = self.list_of_id[i - 1]
+            answer_from_db = 'SELECT Answer FROM %s WHERE _id = %s' % (mainanswer, id_select)
+            answer = cursor.execute(answer_from_db).fetchall()[0][0]
+            user_answer = self.list_of_user_answers[i - 1] if self.list_of_user_answers[i - 1] != '' else 'Нет ответа'
+            right_answer = '        Правильный ответ — ' + answer
+            user_answer = '        Введённый — ' + user_answer
+            answer_result = '    Вопрос ' + str(i) + ':' + '\n' + right_answer + '.' + '\n' + user_answer + '.'
+            list_of_answers.append(answer_result)
+        if self.grade == 5:
+            self.Results_of_test.setGeometry(QtCore.QRect(20, 80, 460, 90))
+            result = 2 * '\t' + 'Вы молодец!' + '\n' + '    В ОГЭ 2020-2021 года по математике вы бы получили 5!'
+        elif self.grade == 4:
+            self.Results_of_test.setGeometry(QtCore.QRect(20, 80, 460, 90))
+            result = '\t' + 'Вы молодец, но можете лучше!'
+            result = result + '\n' + '    В ОГЭ 2020-2021 года по математике вы бы получили 4!'
+        elif self.grade == 3:
+            self.Results_of_test.setGeometry(QtCore.QRect(20, 80, 460, 110))
+            result = '    Вы сдали, но старайтесь лучше в следующий раз!'
+            result = result + '\n' + '    В ОГЭ 2020-2021 года по математике вы бы получили 3!'
+        else:
+            self.Results_of_test.setGeometry(QtCore.QRect(20, 80, 460, 110))
+            result = '    Вы не сдали, старайтесь лучше в следующий раз!'
+            result = result + '\n' + '    В ОГЭ 2020-2021 года по математике вы бы получили 2!'
+        procents_of_comparison = ((self.score / 13) - (int(self.past_score) / 13)) * 100
+        if int(self.past_score) < self.score:
+            self.Result_compare_to_past_one.setGeometry(QtCore.QRect(20, 420, 460, 80))
+            comparing_text = f'\t\tПоздровляем!\n    Вы набрали больше баллов, чем раньше на {procents_of_comparison}%!'
+        elif int(self.past_score) < self.score:
+            self.Result_compare_to_past_one.setGeometry(QtCore.QRect(20, 420, 460, 60))
+            comparing_text = f'      Вы набрали меньше баллов, чем раньше на {-1 * procents_of_comparison}%!'
+        else:
+            self.Result_compare_to_past_one.setGeometry(QtCore.QRect(20, 420, 460, 60))
+            comparing_text = f'     Вы набрали столько же баллов, как и прежде! Стабильность — залог успеха!'
+        self.Result_compare_to_past_one.setText(comparing_text)
+        self.Results_of_test.setText(result)
+        print(list_of_answers)
+        self.Results_of_test_more_info.setText('\n'.join(list_of_answers))
+        skipped_questions_in_total = '   ' + 'Пропущено вопросов:' + str(list_of_answers_to_csv.count('skip'))
+        self.Results_of_test_skipped_questions.setText(skipped_questions_in_total)
+        wrong_answers_in_total = '   ' + 'Неправильных ответов:' + str(list_of_answers_to_csv.count('wrong'))
+        self.Results_of_test_wrong_answers.setText(wrong_answers_in_total)
+        right_answers_in_total = '   ' + 'Правильных ответов:' + str(list_of_answers_to_csv.count('right'))
+        self.Results_of_test_right_answers.setText(right_answers_in_total)
+        self.Past_present_results_button.clicked.connect(self.past_to_present_test)
+        self.Button_to_return.clicked.connect(self.return_to_main_menu)
+        self.Button_to_get_more_info.clicked.connect(self.open_or_close_more_info)
+        score_text = f'     Вы набрали {self.score} баллов'
+        self.Total_score_of_test.setText(score_text)
+
+    def past_to_present_test(self):
+        self.timer.timeout.connect(self.Timebool)
+        self.timer.start(100)
+        if self.bool:
+            self.bool = False
+            if self.Past_present_results_button.text() == 'Этот тест':
+                self.Past_present_results_button.setText('Прошлый тест')
+                if self.past_grade == 5:
+                    self.Results_of_test.setGeometry(QtCore.QRect(20, 80, 460, 90))
+                    result = '\t\tВы молодец!\n    В ОГЭ 2020-2021 года по математике вы бы получили 5!'
+                elif self.past_grade == 4:
+                    self.Results_of_test.setGeometry(QtCore.QRect(20, 80, 460, 90))
+                    result = '\tВы молодец, но можете лучше!'
+                    result = result + '\n    В ОГЭ 2020-2021 года по математике вы бы получили 4!'
+                elif self.past_grade == 3:
+                    self.Results_of_test.setGeometry(QtCore.QRect(20, 80, 460, 110))
+                    result = '    Вы сдали, но старайтесь лучше в следующий раз!'
+                    result = result + '\n    В ОГЭ 2020-2021 года по математике вы бы получили 3!'
+                else:
+                    self.Results_of_test.setGeometry(QtCore.QRect(20, 80, 460, 110))
+                    result = '    Вы не сдали, старайтесь лучше в следующий раз!'
+                    result = result + '\n' + '    В ОГЭ 2020-2021 года по математике вы бы получили 2!'
+                number_of_past_skipped_question_in_csv = str(self.past_list_of_answers_in_csv.count('skip'))
+                skipped_questions_in_total = '   ' + 'Пропущено вопросов:' + number_of_past_skipped_question_in_csv
+                self.Results_of_test_skipped_questions.setText(skipped_questions_in_total)
+                number_of_past_wrong_answers_in_csv = str(self.past_list_of_answers_in_csv.count('wrong'))
+                wrong_answers_in_total = '   ' + 'Неправильных ответов:' + number_of_past_wrong_answers_in_csv
+                self.Results_of_test_wrong_answers.setText(wrong_answers_in_total)
+                number_of_past_right_answers_in_csv = str(self.past_list_of_answers_in_csv.count('right'))
+                right_answers_in_total = '   ' + 'Правильных ответов:' + number_of_past_right_answers_in_csv
+                self.Results_of_test_right_answers.setText(right_answers_in_total)
+                score_text = f'     Вы набрали {self.past_score} баллов'
+                self.Total_score_of_test.setText(score_text)
+            else:
+                self.Past_present_results_button.setText('Этот тест')
+                if self.grade == 5:
+                    self.Results_of_test.setGeometry(QtCore.QRect(20, 80, 460, 90))
+                    result = 2 * '\t' + 'Вы молодец!' + '\n' + '    В ОГЭ 2020-2021 года по математике вы бы получили 5!'
+                elif self.grade == 4:
+                    self.Results_of_test.setGeometry(QtCore.QRect(20, 80, 460, 90))
+                    result = '\t' + 'Вы молодец, но можете лучше!'
+                    result = result + '\n' + '    В ОГЭ 2020-2021 года по математике вы бы получили 4!'
+                elif self.grade == 3:
+                    self.Results_of_test.setGeometry(QtCore.QRect(20, 80, 460, 110))
+                    result = '    Вы сдали, но старайтесь лучше в следующий раз!'
+                    result = result + '\n' + '    В ОГЭ 2020-2021 года по математике вы бы получили 3!'
+                else:
+                    self.Results_of_test.setGeometry(QtCore.QRect(20, 80, 460, 110))
+                    result = '    Вы не сдали, старайтесь лучше в следующий раз!'
+                    result = result + '\n' + '    В ОГЭ 2020-2021 года по математике вы бы получили 2!'
+                number_of_past_skipped_question_in_csv = str(self.present_list_of_answers.count('skip'))
+                skipped_questions_in_total = '   ' + 'Пропущено вопросов:' + number_of_past_skipped_question_in_csv
+                self.Results_of_test_skipped_questions.setText(skipped_questions_in_total)
+                number_of_past_wrong_answers_in_csv = str(self.present_list_of_answers.count('wrong'))
+                wrong_answers_in_total = '   ' + 'Неправильных ответов:' + number_of_past_wrong_answers_in_csv
+                self.Results_of_test_wrong_answers.setText(wrong_answers_in_total)
+                number_of_past_right_answers_in_csv = str(self.present_list_of_answers.count('right'))
+                right_answers_in_total = '   ' + 'Правильных ответов:' + number_of_past_right_answers_in_csv
+                self.Results_of_test_right_answers.setText(right_answers_in_total)
+                score_text = f'     Вы набрали {self.score} баллов'
+                self.Total_score_of_test.setText(score_text)
+            self.Results_of_test.setText(result)
+
+    def Timebool(self):
+        self.bool = True
+        self.timer.stop()
+
+    def open_or_close_more_info(self):
+        self.timer.timeout.connect(self.Timebool)
+        self.timer.start(100)
+        if self.bool:
+            self.bool = False
+            if self.Button_to_get_more_info.text() == 'Ещё информация':
+                self.Results_of_test_more_info.setHidden(False)
+                self.Results_of_test.setHidden(True)
+                self.Results_of_test_skipped_questions.setHidden(True)
+                self.Results_of_test_right_answers.setHidden(True)
+                self.Results_of_test_wrong_answers.setHidden(True)
+                self.Past_present_results_button.setHidden(True)
+                self.Result_compare_to_past_one.setHidden(True)
+                self.Total_score_of_test.setHidden(True)
+                self.Button_to_get_more_info.setText('Скрыть информацию')
+            else:
+                self.Results_of_test_more_info.setHidden(True)
+                self.Results_of_test.setHidden(False)
+                self.Results_of_test_skipped_questions.setHidden(False)
+                self.Results_of_test_right_answers.setHidden(False)
+                self.Results_of_test_wrong_answers.setHidden(False)
+                self.Past_present_results_button.setHidden(False)
+                self.Result_compare_to_past_one.setHidden(False)
+                self.Total_score_of_test.setHidden(False)
+                self.Button_to_get_more_info.setText('Ещё информация')
+            if self.just_bool_for_first_time_doing_test:
+                self.Past_present_results_button.setHidden(True)
+                self.Result_compare_to_past_one.setHidden(True)
+
+
+    def return_to_main_menu(self):
+        self.list_of_user_answers = list()
+        self.list_of_id = list()
+        self.question_number = 0
+        self.Main_name_in_menu.setHidden(False)
+        self.Button_to_get_more_info.setHidden(True)
+        self.Skip_Answer.setHidden(True)
+        self.ReadyForTestButton.setHidden(False)
+        self.Question_Number.setHidden(True)
+        self.AnswerButton.setHidden(True)
+        self.InputAnswer.setHidden(True)
+        self.Question.setHidden(True)
+        self.Results_of_test.setHidden(True)
+        self.Button_to_return.setHidden(True)
+        self.Results_of_test_wrong_answers.setHidden(True)
+        self.Results_of_test_right_answers.setHidden(True)
+        self.Results_of_test_skipped_questions.setHidden(True)
+        self.Button_to_get_more_info.setText('Ещё информация')
+        self.Results_of_test_more_info.setHidden(True)
+        self.Result_compare_to_past_one.setHidden(True)
+        self.Past_present_results_button.setHidden(True)
+        self.Total_score_of_test.setHidden(True)
+        self.More_info_button.setHidden(False)
+        self.info_about_programmer.setHidden(False)
+
+    def more_info_about_app(self):
+        self.ReadyForTestButton.setHidden(True)
+        self.Main_name_in_menu.setHidden(True)
+        self.More_info_button.setHidden(True)
+        self.Must_to_know_info_about_app.setHidden(False)
+        self.Return_back_to_main_menu_from_more_info_button.setHidden(False)
+
+    def back_to_menu_from_more_info(self):
+        self.ReadyForTestButton.setHidden(False)
+        self.Main_name_in_menu.setHidden(False)
+        self.More_info_button.setHidden(False)
+        self.Must_to_know_info_about_app.setHidden(True)
+        self.Return_back_to_main_menu_from_more_info_button.setHidden(True)
+
+    def closeEvent(self, event):
+        def closed():
+            self.reply.close()
+            event.ignore()
+
+        self.reply = QDialog()
+        self.reply.setMouseTracking(True)
+        self.reply.setWindowTitle('Закрыть приложение.')
+        self.reply.setFixedSize(200, 100)
+        self.reply.setStyleSheet('background-color: rgb(204, 204, 255);')
+        self.reply.setWindowFlags(
+            QtCore.Qt.Window |
+            QtCore.Qt.CustomizeWindowHint |
+            QtCore.Qt.WindowTitleHint |
+            QtCore.Qt.WindowCloseButtonHint |
+            QtCore.Qt.WindowStaysOnTopHint
+        )
+        vbox = QVBoxLayout()
+        label_dialog = QLabel(self.reply)
+        label_dialog.resize(180, 50)
+        label_dialog.setStyleSheet("padding: 1px;\
+                background-color: \
+                                   rgb(255, 255, 255); \
+                                   color: rgb(0,0,0); \
+                                   border-radius: 20px; border-width: -1px; \
+                                   border-color: rgb(0,0,0); \
+                                   font: bold 10px; \
+                                   border-style: outset;")
+        label_dialog.setText('Вы действительно хотите выйти?')
+        button_yes = QPushButton(self.reply)
+        button_yes.setStyleSheet("padding: 10px;\
+                                background-color: \
+                                                   rgb(255, 255, 255); \
+                                                   color: rgb(0,0,0); \
+                                                   border-radius: 10px; border-width: 2px; \
+                                                   border-color: rgb(0,0,0); \
+                                                   font: bold 10px; \
+                                                   padding: 4px; min-width: 1em; border-style: outset;")
+        button_yes.setText("Да")
+        button_yes.clicked.connect(lambda: self.reply.close())
+        button_no = QPushButton(self.reply)
+        button_no.setStyleSheet("padding: 10px;\
+                                        background-color: \
+                                                           rgb(255, 255, 255); \
+                                                           color: rgb(0,0,0); \
+                                                           border-radius: 10px; border-width: 2px; \
+                                                           border-color: rgb(0,0,0); \
+                                                           font: bold 10px; \
+                                                           padding: 4px; min-width: 1em; border-style: outset;")
+        button_no.setText('Нет')
+        button_no.clicked.connect(closed)
+        layout = QHBoxLayout()
+        layout.addWidget(button_yes)
+        layout.addWidget(button_no)
+        vbox.addWidget(label_dialog)
+        vbox.addSpacing(5)
+        vbox.addLayout(layout)
+        self.reply.setLayout(vbox)
+        self.reply.exec()
+
+    def skip_answer(self):
+        def close_skip_window():
+            self.skip_window_answer.close()
+
+        def skip():
+            self.skip_bool = True
+            close_skip_window()
+            self.next_question()
+
+        self.skip_window_answer = QDialog()
+        self.skip_window_answer.setWindowTitle('Пропуск вопроса.')
+        self.skip_window_answer.setFixedSize(250, 100)
+        self.skip_window_answer.setStyleSheet('background-color: rgb(204, 204, 255);')
+        self.skip_window_answer.setWindowFlags(
+            QtCore.Qt.Window |
+            QtCore.Qt.CustomizeWindowHint |
+            QtCore.Qt.WindowTitleHint |
+            QtCore.Qt.WindowCloseButtonHint |
+            QtCore.Qt.WindowStaysOnTopHint
+        )
+        vbox = QVBoxLayout()
+        label_dialog = QLabel(self.skip_window_answer)
+        label_dialog.resize(300, 60)
+        label_dialog.setStyleSheet("padding: 1px;\
+                        background-color: \
+                                           rgb(255, 255, 255); \
+                                           color: rgb(0,0,0); \
+                                           border-radius: 20px; border-width: -1px; \
+                                           border-color: rgb(0,0,0); \
+                                           font: bold 13px; \
+                                           border-style: outset;")
+        label_dialog.setText('      ' + 'Вы действительно хотите' + '\n' + '\t' + 'пропустить вопрос?')
+        button_yes = QPushButton(self.skip_window_answer)
+        button_yes.setStyleSheet("padding: 10px;\
+                                        background-color: \
+                                                           rgb(255, 255, 255); \
+                                                           color: rgb(0,0,0); \
+                                                           border-radius: 10px; border-width: 2px; \
+                                                           border-color: rgb(0,0,0); \
+                                                           font: bold 12px; \
+                                                           padding: 4px; min-width: 1em; border-style: outset;")
+        button_yes.setText("Да")
+        button_yes.clicked.connect(skip)
+        button_no = QPushButton(self.skip_window_answer)
+        button_no.setStyleSheet("padding: 10px;\
+                                                background-color: \
+                                                                   rgb(255, 255, 255); \
+                                                                   color: rgb(0,0,0); \
+                                                                   border-radius: 10px; border-width: 2px; \
+                                                                   border-color: rgb(0,0,0); \
+                                                                   font: bold 12px; \
+                                                                   padding: 4px; min-width: 1em; border-style: outset;")
+        button_no.setText('Нет')
+        layout = QHBoxLayout()
+        layout.addWidget(button_yes)
+        layout.addWidget(button_no)
+        vbox.addWidget(label_dialog)
+        vbox.addSpacing(5)
+        button_no.clicked.connect(close_skip_window)
+        vbox.addLayout(layout)
+        self.skip_window_answer.setLayout(vbox)
+        self.skip_window_answer.exec()
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = MyWidget()
+    ex.show()
+    sys.exit(app.exec())
