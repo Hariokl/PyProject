@@ -211,7 +211,7 @@ R—сопротивление (в омах). Пользуясь этой фор
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
+        MainWindow.setObjectName("Тест по математике")
         MainWindow.setEnabled(True)
         MainWindow.resize(500, 600)
         MainWindow.setFixedSize(500, 600)
@@ -272,7 +272,8 @@ class Ui_MainWindow(object):
                                                    font: bold 17px; \
                                                    border-style: outset;")
         info = "\t\tВАЖНО!\n   Это приложение ещё на стадии разработки и имеет много недаработок, прошу вас это понять."
-        info = f'{info}   Оно было сделано для проекта "ГИА-легче лёгкого", и не является оригинальным продуктом.'
+        info = f'{info}   Оно было сделано для проекта "ОГЭ по математике-легче лёгкого"'
+        info = f'{info}, и не является оригинальным продуктом.'
         info = f'{info} В приложении часто используются символы, не использующиеся в математике. Вот примеры:\n'
         info = info + "    {4} - корень из четырёх.\n    4^3 - четыре в третий степени.\n"
         info = f'{info}    1/2 - один поделить на два, т.е., одна вторая.\n'
@@ -288,10 +289,10 @@ class Ui_MainWindow(object):
                                                            color: rgb(100,100,100); \
                                                            border-radius: 20px; border-width: -1px; \
                                                            border-color: rgb(0,0,0); \
-                                                           font: bold 17px; \
+                                                           font: bold 16px; \
                                                            border-style: outset;")
         recieve = '    О всех недочётах просим писать на корпоративную почту - sfc.easy.as.pie@gmail.com\n'
-        recieve = f'{recieve}    Код написан организатором проекта "ГИА-легче лёгкого" - '
+        recieve = f'{recieve}    Код написан организатором проекта "ОГЭ по математике-легче лёгкого" - '
         recieve = f'{recieve}Бужинским Всеволодом Ростиславовичом'
         self.info_about_programmer.setText(recieve)
         self.InputAnswer = QLineEdit(self.centralwidget)
@@ -529,7 +530,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Тест по математике"))
         self.AnswerButton.setText(_translate("MainWindow", "Ответить"))
         self.ReadyForTestButton.setText(_translate("MainWindow", "Начать Тест"))
 
